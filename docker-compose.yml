@@ -1,0 +1,46 @@
+postgres_data:
+  image: postgres
+  enrtypoint: /bin/echo postgres data
+postgres:
+  image: postgres
+  environment:
+    - POSTGRES_USER=pact
+    - POSTGRES_PASSWORD=pact
+  volumes_from:
+    - postgres_data
+  ports:
+    - "5432:5432"
+
+pact_server:
+  image: uglyog/pact-jvm-server
+  ports:
+    - "8090:8080"
+    - "20000-20010:20000-20010"
+
+pact_broker:
+  image: dius/pact_broker
+  ports:
+    - "80:80"
+  environment:
+    - PACT_BROKER_DATABASE_USERNAME=pact
+    - PACT_BROKER_DATABASE_PASSWORD=pact
+    - PACT_BROKER_DATABASE_HOST=jdbc:postgres://postgres:5432/pact
+  links:
+    - postgres
+
+# producer:
+#   build: ./producer
+#   ports:
+#     - "8081:8080"
+#   links:
+#     - pact_broker
+#     - pact_server
+
+# consumer:
+#   build: ./consumer
+#   ports:
+#     - "8082:8080"
+#   links:
+#     - producer
+#     - pact_broker
+#     - pact_server
