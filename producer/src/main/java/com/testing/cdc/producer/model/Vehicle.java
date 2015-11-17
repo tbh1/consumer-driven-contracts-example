@@ -36,7 +36,6 @@ public class Vehicle {
     private double amortizedValue;
     private double taxableValue;
     private double kbbValue;
-
     private boolean publicListing;
 
     public int getId() {
