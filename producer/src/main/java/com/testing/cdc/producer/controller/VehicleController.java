@@ -5,8 +5,11 @@ import com.testing.cdc.producer.model.Vehicle;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.URISyntaxException;
 
 /**
@@ -16,7 +19,7 @@ import java.net.URISyntaxException;
 @EnableAutoConfiguration
 public class VehicleController {
 
-    @RequestMapping(value = "/vehicle/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/vehicle/{id}", method = RequestMethod.GET, produces = {"application/xml"})
     public Vehicle getVehicle(@PathVariable int id) throws JAXBException, IOException, URISyntaxException {
         return VehicleDelegate.getVehicle(id);
     }

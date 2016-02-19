@@ -29,6 +29,9 @@ import static org.junit.Assert.assertEquals;
  */
 public class InternalVehiclePactTest {
 
+    // @Value("${producer_url}")
+    // String producerUrl;
+
     @Rule
     public PactProviderRule rule = new PactProviderRule("VehicleProvider", "localhost", 8080, this);
 
@@ -36,11 +39,15 @@ public class InternalVehiclePactTest {
     public PactFragment createFragment(PactDslWithProvider builder) {
         Map<String, String> headers = new HashMap<String, String>();
 
+        // headers.put("Accept", "application/xml");
+        // headers.put("Accept", "application/json");
+
         String responseBody = null;
         try {
             responseBody = FileUtils.getInputFromFile(ConsumerApp.class
                     .getClassLoader()
-                    .getResource("expectedVehicleResponse.xml").toURI());
+                   .getResource("expectedVehicleResponse.xml").toURI());
+                    // .getResource("expectedVehicleResponse.json").toURI());
         } catch (IOException |URISyntaxException e) {
             e.printStackTrace();
         }
@@ -53,7 +60,10 @@ public class InternalVehiclePactTest {
                 .headers(headers)
                 .willRespondWith()
                 .status(200)
+//                .matchHeader("Content-Type", ".*application/xml.*")
+                .matchHeader("Content-Type", "^.*xml.*$")
                 .body(responseBody, ContentType.APPLICATION_XML)
+                // .body(responseBody, ContentType.APPLICATION_JSON)
                 .toFragment();
     }
 
@@ -83,3 +93,4 @@ public class InternalVehiclePactTest {
         // all other fields this consumer requires
     }
 }
+//

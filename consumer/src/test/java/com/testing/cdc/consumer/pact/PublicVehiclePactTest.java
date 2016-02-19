@@ -33,13 +33,16 @@ public class PublicVehiclePactTest {
     @Pact(consumer="PublicVehicleConsumer")
     public PactFragment createFragment(PactDslWithProvider builder) {
         Map<String, String> headers = new HashMap<String, String>();
-//        headers.put("Accept", "application/xml");
+
+        // headers.put("Accept", "application/xml");
+        // headers.put("Accept", "application/json");
 
         String responseBody = null;
         try {
             responseBody = FileUtils.getInputFromFile(ConsumerApp.class
                     .getClassLoader()
-                    .getResource("expectedVehicleResponse.xml").toURI());
+                   .getResource("expectedVehicleResponse.xml").toURI());
+                    // .getResource("expectedVehicleResponse.json").toURI());
         } catch (IOException|URISyntaxException e) {
             e.printStackTrace();
         }
@@ -52,7 +55,9 @@ public class PublicVehiclePactTest {
                     .headers(headers)
                 .willRespondWith()
                     .status(200)
+                    .matchHeader("Content-Type", "^.*xml.*$")
                     .body(responseBody, ContentType.APPLICATION_XML)
+                    // .body(responseBody, ContentType.APPLICATION_JSON)
                 .toFragment();
     }
 
