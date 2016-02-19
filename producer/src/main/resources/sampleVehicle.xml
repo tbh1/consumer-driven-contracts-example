@@ -23,4 +23,5 @@
     <taxableValue>13240.00</taxableValue>
     <kbbValue>15600.00</kbbValue>
     <publicListing>true</publicListing>
+    <!--<heatedSeats>true</heatedSeats>-->
 </Vehicle>

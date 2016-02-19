@@ -38,6 +38,16 @@ public class Vehicle {
     private double kbbValue;
     private boolean publicListing;
 
+//    private boolean heatedSeats;
+//
+//    public boolean isHeatedSeats() {
+//        return heatedSeats;
+//    }
+//
+//    public void setHeatedSeats(boolean heatedSeats) {
+//        this.heatedSeats = heatedSeats;
+//    }
+
     public int getId() {
         return id;
     }
