@@ -1,4 +1,7 @@
 buildscript {
+    ext{
+        pactBroker = 'pact_broker'
+    }
     repositories {
         mavenCentral()
     }
@@ -41,9 +44,15 @@ test {
     systemProperties['pact.rootDir'] = "$buildDir/pacts"
 }
 
+allprojects {
+    if (project.hasProperty('pactBrokerUrl')) {
+        project.pactBroker = project.pactBrokerUrl
+    }
+}
+
 pact {
     publish {
         pactDirectory = 'build/pacts'
-        pactBrokerUrl = 'http://dockerz:80'
+        pactBrokerUrl = "${pactBroker}"
     }
 }

@@ -7,8 +7,7 @@ import com.testing.cdc.producer.util.FileUtils;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,9 +19,13 @@ import java.util.stream.Stream;
 public class VehicleDelegate {
 
     public static Vehicle getVehicle(int id) throws JAXBException, URISyntaxException, IOException {
-        String input = FileUtils.getInputFromFile(ProducerApp.class
-                .getClassLoader()
-                .getResource("sampleVehicle.xml").toURI());
+//        InputStream inputStream =
+//            VehicleDelegate.class.getClassLoader().getResourceAsStream("/resources/sampleVehicle.xml");
+//        BufferedReader buffer = new BufferedReader(new InputStreamReader(inputStream));
+//        String input = readBigStringIn(buffer);
+         String input = FileUtils.getInputFromFile(ProducerApp.class
+                 .getClassLoader()
+                 .getResource("sampleVehicle.xml").toURI());
 
         JAXBContext jaxbContext = JAXBContext.newInstance(Vehicle.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
@@ -31,5 +34,14 @@ public class VehicleDelegate {
         Vehicle vehicle = (Vehicle) unmarshaller.unmarshal(reader);
         vehicle.setId(id);
         return vehicle;
+    }
+
+    private static String readBigStringIn(BufferedReader buffIn) throws IOException {
+        StringBuilder everything = new StringBuilder();
+        String line;
+        while( (line = buffIn.readLine()) != null) {
+            everything.append(line);
+        }
+        return everything.toString();
     }
 }

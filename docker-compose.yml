@@ -14,17 +14,7 @@ pact_server:
   image: uglyog/pact-jvm-server
   ports:
     - "8090:8080"
-    - "20000:20000"
-    - "20001:20001"
-    - "20002:20002"
-    - "20003:20003"
-    - "20004:20004"
-    - "20005:20005"
-    - "20006:20006"
-    - "20007:20007"
-    - "20008:20008"
-    - "20009:20009"
-    - "20010:20010"
+    - "20000-20010:20000-20010"
 
 # producer:
 #   build: ./producer
@@ -32,13 +22,11 @@ pact_server:
 #     - "8081:8080"
 #   links:
 #     - pact_broker
-#     - pact_server
 
 # consumer:
 #   build: ./consumer
 #   ports:
 #     - "8082:8080"
 #   links:
-#     - producer
 #     - pact_broker
-#     - pact_server
+#     - producer
